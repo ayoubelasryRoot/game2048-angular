@@ -10,9 +10,6 @@ import { BoardComponent } from './@components/board/board.component';
 import { CellPanelComponent } from './@components/cell-panel/cell-panel.component';
 import { TilePanelComponent } from './@components/tile-panel/tile-panel.component';
 
-
-
-
 import { GameService } from './@services/game.service';
 import { reducers } from './@stores';
 import { HeaderComponent } from './@components/header/header.component';
