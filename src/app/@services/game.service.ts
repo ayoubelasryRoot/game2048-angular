@@ -73,18 +73,14 @@
                     const next = cell.next;
 
                     if (next && next.value === tile.value && !next.merged) {
-                        next.value = tile.value * 2; // double the next tile's value
+                        next.value = tile.value * 2; 
 
-                        tile.shouldDump = true; // set the tile shouldDump status to true
-                                                // so that we could clean this tile before next move
-
-                        next.merged = true; // set the next tile's merged status to true
-                                            // so that we know it could not merge any more
-                                            // in the next check
+                        tile.shouldDump = true;
+                        next.merged = true;
 
                         this.moveTile(next.position, tile, next);
 
-                        scores += next.value; // Add the new value to scoring table
+                        scores += next.value;
 
                         hasMoved = true;
 
@@ -93,9 +89,6 @@
                         }
 
                     } else {
-                        // It a tile's next tile not exists,
-                        // that means the new coordination is empty
-                        // and we could move the tile to the new place
                         this.moveTile(cell.newPosition, tile);
                         this._cells[cell.newPosition] = tile.id;
                     }
@@ -183,10 +176,7 @@
 
     private getTileAt( coordination: { x: number, y: number } ): Tile {
 
-        // We need to check if the coordination is inside the grid
         if (this.withinGrid(coordination)) {
-            // transform coordination to its corresponding index in grid array so that
-            // we can get the specific value (tile's Id) in grid array
             const position = coordination.x + coordination.y * SIZE;
             const id = this._cells[position];
 
@@ -212,24 +202,17 @@
                 x: current.x + vector.x,
                 y: current.y + vector.y
             };
-
-            // If the checkCellAvailability return true, that means the new coordination has no tile
-            // and we continue to check the next one in the same direction.
-            // If the checkCellAvailability return false,
-            // that means the coordination we check either has a tile or is out of the grid
         } while (this.checkCellAvailability(coordination));
 
         const newPosition = current.x + current.y * SIZE;
 
         return {
-            newPosition, // we save the last available coordination
-            next: this.getTileAt(coordination) // we get the tile on non-available coordination
+            newPosition, 
+            next: this.getTileAt(coordination) 
         };
     }
 
     private checkCellAvailability( coordination: { x: number, y: number } ): boolean {
-        // if the coordination is not inside the grid, we return false.
-        // if it is inside the grid, we check if the coordination inside the grid has Id value.
         if (this.withinGrid(coordination)) {
             const index = coordination.x + coordination.y * SIZE;
             return !this._cells[index];
